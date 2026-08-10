@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1510cf0d-1716-4c62-a6cc-f7ab273ca05f",
+    "customerName": "Ricardo",
+    "customerPhone": "833 123 4567",
+    "date": "2026-08-19",
+    "time": "15:19",
+    "eventType": "Confirmación",
+    "guestCount": 200,
+    "totalPrice": 12000,
+    "advancePayment": 3000,
+    "reservationStatus": "Apartada",
+    "notes": "wawfwafwfaf",
+    "paymentStatus": "Anticipo",
+    "createdAt": "2026-08-07T05:19:38.074Z"
+  },
+  {
+    "id": "71339aa6-ee8d-4fa0-8cc3-23c0ac491cc6",
+    "customerName": "Griss",
+    "customerPhone": "8332115236",
+    "date": "2026-08-06",
+    "time": "18:33",
+    "eventType": "Cumpleaños",
+    "guestCount": 70,
+    "totalPrice": 6000,
+    "advancePayment": 2000,
+    "reservationStatus": "Apartada",
+    "notes": "",
+    "paymentStatus": "Anticipo",
+    "createdAt": "2026-08-08T20:34:23.557Z"
+  }
+]
