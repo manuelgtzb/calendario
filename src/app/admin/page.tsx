@@ -1,8 +1,11 @@
 "use client";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 
 export default function AdminLoginPage() {
+  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
@@ -36,7 +39,7 @@ export default function AdminLoginPage() {
         return;
       }
 
-      window.location.href = "/admin/dashboard";
+      router.push("/admin/dashboard");
     } catch {
       setError("No fue posible conectarse con el servidor.");
     } finally {
@@ -46,9 +49,9 @@ export default function AdminLoginPage() {
 
   return (
     <main className="admin-login-page">
-      <a className="admin-back-link" href="/">
+      <Link className="admin-back-link" href="/">
         ← Volver al sitio
-      </a>
+      </Link>
 
       <section className="admin-login-container">
         <div className="admin-lock-icon" aria-hidden="true">

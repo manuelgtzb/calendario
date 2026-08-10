@@ -141,9 +141,9 @@ export default function ReservationForm({
       if (!response.ok) {
         setError(
           data.error ??
-          editing
+          (editing
             ? "No se pudo actualizar la reservación."
-            : "No se pudo crear la reservación."
+            : "No se pudo crear la reservación.")
         );
 
         return;
@@ -229,8 +229,9 @@ export default function ReservationForm({
             </h2>
 
             <p>
-              Registra la información del cliente y
-              del evento.
+              {editing
+                ? "Actualiza la información del cliente y del evento."
+                : "Registra la información del cliente y del evento."}
             </p>
           </div>
 
