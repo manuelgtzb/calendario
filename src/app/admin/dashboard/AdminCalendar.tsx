@@ -6,6 +6,7 @@ import type { CalendarEvent } from "@/types/event";
 interface AdminCalendarProps {
   events: CalendarEvent[];
   onSelectDate: (date: string) => void;
+  onSelectEvent: (event: CalendarEvent) => void;
 }
 
 const MONTHS = [
@@ -35,6 +36,7 @@ function formatDateKey(year: number, month: number, day: number) {
 export default function AdminCalendar({
   events,
   onSelectDate,
+  onSelectEvent,
 }: AdminCalendarProps) {
   const today = new Date();
 
@@ -148,11 +150,11 @@ export default function AdminCalendar({
               className={`admin-calendar-day ${
                 isToday ? "today" : ""
               } ${event ? "occupied" : ""}`}
-              onClick={() => {
-  if (!event) {
-    onSelectDate(date);
-  }
-}}
+              onClick={() =>
+                event
+                  ? onSelectEvent(event)
+                  : onSelectDate(date)
+              }
             >
               <span className="calendar-day-number">{day}</span>
 

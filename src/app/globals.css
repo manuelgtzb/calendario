@@ -783,6 +783,19 @@ footer { border-top: 1px solid var(--line); padding: 32px 4vw; display: flex; ju
   color: var(--muted);
 }
 
+.admin-events-table-row {
+  cursor: pointer;
+}
+
+.admin-events-table-row:hover td {
+  background: #fcfaf6;
+}
+
+.admin-events-table-row:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: -2px;
+}
+
 .reservation-status,
 .payment-status {
   display: inline-flex;
@@ -967,6 +980,19 @@ footer { border-top: 1px solid var(--line); padding: 32px 4vw; display: flex; ju
 }
 
 .reservation-save-button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.reservation-delete-button {
+  border: 1px solid var(--wine);
+  color: var(--wine);
+  background: transparent;
+}
+
+.reservation-delete-button:disabled,
+.reservation-cancel-button:disabled,
+.reservation-modal-header > button:disabled {
   cursor: wait;
   opacity: 0.6;
 }

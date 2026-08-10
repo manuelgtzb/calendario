@@ -109,12 +109,12 @@ export default function ReservationForm({
     setSaving(true);
 
     try {
-const response = await fetch(
-  eventToEdit
-    ? `/api/events/${eventToEdit.id}`
-    : "/api/events",
-  {
-    method: eventToEdit ? "PATCH" : "POST",
+      const response = await fetch(
+        eventToEdit
+          ? `/api/events/${eventToEdit.id}`
+          : "/api/events",
+        {
+          method: eventToEdit ? "PATCH" : "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -133,14 +133,17 @@ const response = await fetch(
             form.reservationStatus,
           notes: form.notes,
         }),
-      });
+        }
+      );
 
       const data = await response.json();
 
       if (!response.ok) {
         setError(
           data.error ??
-          "No se pudo crear la reservación."
+          editing
+            ? "No se pudo actualizar la reservación."
+            : "No se pudo crear la reservación."
         );
 
         return;
@@ -148,19 +151,57 @@ const response = await fetch(
 
       const savedEvent = data as CalendarEvent;
 
-if (eventToEdit) {
-  onUpdated?.(savedEvent);
-} else {
-  onCreated(savedEvent);
-}
+      if (eventToEdit) {
+        onUpdated?.(savedEvent);
+      } else {
+        onCreated(savedEvent);
+      }
 
-onClose();
+      onClose();
     } catch {
       setError(
         "No fue posible conectarse con el servidor."
       );
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function handleDelete() {
+    if (!eventToEdit || deleting || saving) {
+      return;
+    }
+
+    if (!window.confirm("¿Seguro que deseas eliminar esta reservación?")) {
+      return;
+    }
+
+    setError("");
+    setDeleting(true);
+
+    try {
+      const response = await fetch(`/api/events/${eventToEdit.id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+
+        throw new Error(
+          data?.error ?? "No se pudo eliminar la reservación."
+        );
+      }
+
+      onDeleted?.(eventToEdit.id);
+      onClose();
+    } catch (deleteError) {
+      setError(
+        deleteError instanceof Error
+          ? deleteError.message
+          : "No se pudo eliminar la reservación."
+      );
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -182,7 +223,9 @@ onClose();
             </p>
 
             <h2 id="reservation-title">
-              Nueva reservación
+              {editing
+                ? "Editar reservación"
+                : "Nueva reservación"}
             </h2>
 
             <p>
@@ -195,6 +238,7 @@ onClose();
             type="button"
             onClick={onClose}
             aria-label="Cerrar formulario"
+            disabled={saving || deleting}
           >
             ×
           </button>
@@ -381,18 +425,32 @@ onClose();
               className="reservation-cancel-button"
               type="button"
               onClick={onClose}
+              disabled={saving || deleting}
             >
               Cancelar
             </button>
 
+            {editing && (
+              <button
+                className="reservation-delete-button"
+                type="button"
+                onClick={handleDelete}
+                disabled={saving || deleting}
+              >
+                {deleting ? "Eliminando..." : "Eliminar"}
+              </button>
+            )}
+
             <button
               className="reservation-save-button"
               type="submit"
-              disabled={saving}
+              disabled={saving || deleting}
             >
               {saving
                 ? "Guardando..."
-                : "Guardar reservación"}
+                : editing
+                  ? "Guardar cambios"
+                  : "Guardar reservación"}
             </button>
           </footer>
         </form>

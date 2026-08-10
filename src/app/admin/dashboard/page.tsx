@@ -52,7 +52,10 @@ export default function AdminDashboardPage() {
     useState(false);
 
   const [selectedDate, setSelectedDate] =
-  useState("");  
+    useState("");
+
+  const [selectedEvent, setSelectedEvent] =
+    useState<CalendarEvent | null>(null);
 
   const [loggingOut, setLoggingOut] =
     useState(false);
@@ -115,25 +118,53 @@ export default function AdminDashboardPage() {
     };
   }, [events]);
 
-function openReservationForm(date = "") {
-  setSelectedDate(date);
-  setShowForm(true);
-}
+  function sortEvents(events: CalendarEvent[]) {
+    return [...events].sort((a, b) =>
+      `${a.date}T${a.time}`.localeCompare(
+        `${b.date}T${b.time}`
+      )
+    );
+  }
 
-function closeReservationForm() {
-  setShowForm(false);
-  setSelectedDate("");
-}
+  function openNewReservationForm(date = "") {
+    setSelectedEvent(null);
+    setSelectedDate(date);
+    setShowForm(true);
+  }
+
+  function openEditForm(event: CalendarEvent) {
+    setSelectedDate("");
+    setSelectedEvent(event);
+    setShowForm(true);
+  }
+
+  function closeReservationForm() {
+    setShowForm(false);
+    setSelectedDate("");
+    setSelectedEvent(null);
+  }
 
   function handleCreated(
     event: CalendarEvent
   ) {
+    setEvents((current) => sortEvents([...current, event]));
+  }
+
+  function handleUpdated(event: CalendarEvent) {
     setEvents((current) =>
-      [...current, event].sort((a, b) =>
-        `${a.date}T${a.time}`.localeCompare(
-          `${b.date}T${b.time}`
+      sortEvents(
+        current.map((currentEvent) =>
+          currentEvent.id === event.id
+            ? event
+            : currentEvent
         )
       )
+    );
+  }
+
+  function handleDeleted(id: string) {
+    setEvents((current) =>
+      current.filter((event) => event.id !== id)
     );
   }
 
@@ -229,7 +260,7 @@ function closeReservationForm() {
             <button
               className="admin-new-reservation"
               type="button"
-              onClick={() => openReservationForm()}
+              onClick={() => openNewReservationForm()}
             >
               <span>＋</span>
               Nueva reservación
@@ -304,7 +335,8 @@ function closeReservationForm() {
   ) : (
     <AdminCalendar
       events={events}
-      onSelectDate={openReservationForm}
+      onSelectDate={openNewReservationForm}
+      onSelectEvent={openEditForm}
     />
   )
 ) : (
@@ -346,7 +378,7 @@ function closeReservationForm() {
                 <button
                   className="admin-new-reservation"
                   type="button"
-                  onClick={() => openReservationForm()}
+                  onClick={() => openNewReservationForm()}
                 >
                   ＋ Nueva reservación
                 </button>
@@ -367,7 +399,22 @@ function closeReservationForm() {
 
                   <tbody>
                     {events.map((event) => (
-                      <tr key={event.id}>
+                      <tr
+                        key={event.id}
+                        className="admin-events-table-row"
+                        tabIndex={0}
+                        aria-label={`Editar reservación de ${event.customerName} del ${formatDate(event.date)}`}
+                        onClick={() => openEditForm(event)}
+                        onKeyDown={(keyboardEvent) => {
+                          if (
+                            keyboardEvent.key === "Enter" ||
+                            keyboardEvent.key === " "
+                          ) {
+                            keyboardEvent.preventDefault();
+                            openEditForm(event);
+                          }
+                        }}
+                      >
                         <td>
                           <strong>
                             {formatDate(
@@ -431,9 +478,13 @@ function closeReservationForm() {
 
       {showForm && (
   <ReservationForm
+    key={selectedEvent?.id ?? selectedDate ?? "new"}
     initialDate={selectedDate}
+    eventToEdit={selectedEvent}
     onClose={closeReservationForm}
     onCreated={handleCreated}
+    onUpdated={handleUpdated}
+    onDeleted={handleDeleted}
   />
 )}
     </main>
