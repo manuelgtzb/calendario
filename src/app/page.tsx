@@ -19,6 +19,7 @@ export default function Home() {
 
       <section className="hero" id="inicio">
         <div className="hero-overlay" />
+        <div className="hero-ornament" aria-hidden="true" />
         <div className="hero-content">
           <p className="eyebrow">Celebraciones que permanecen</p>
           <h1>El escenario perfecto para tu historia.</h1>
@@ -28,6 +29,10 @@ export default function Home() {
           <div className="hero-actions">
             <a className="primary-button" href="#fechas">Ver fechas disponibles</a>
             <a className="text-link" href="#espacio">Conocer el salón <span>→</span></a>
+          </div>
+          <div className="hero-proof" aria-label="Características del salón">
+            <span>Eventos personalizados</span>
+            <span>Atención por cita</span>
           </div>
         </div>
         <div className="hero-detail">
@@ -47,17 +52,17 @@ export default function Home() {
       </section>
 
       <section className="services section" id="servicios">
-        <article>
+        <article className="service-card">
           <span>01</span>
           <h3>Espacio versátil</h3>
           <p>Montajes personalizados para eventos íntimos o grandes celebraciones.</p>
         </article>
-        <article>
+        <article className="service-card">
           <span>02</span>
           <h3>Atención cercana</h3>
           <p>Acompañamiento para organizar tiempos, proveedores y detalles importantes.</p>
         </article>
-        <article>
+        <article className="service-card">
           <span>03</span>
           <h3>Ubicación accesible</h3>
           <p>Un punto cómodo para tus invitados, con estacionamiento y fácil llegada.</p>

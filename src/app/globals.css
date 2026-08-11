@@ -1249,3 +1249,87 @@ footer { border-top: 1px solid var(--line); padding: 32px 4vw; display: flex; ju
     min-height: 105px;
   }
 }
+
+/* =========================================
+   REFINAMIENTO VISUAL
+========================================= */
+
+.site-header {
+  height: 78px;
+  padding-inline: clamp(20px, 5vw, 76px);
+  box-shadow: 0 8px 28px rgba(52, 39, 20, 0.04);
+}
+
+.brand { font-size: 18px; }
+.brand-mark { box-shadow: inset 0 0 0 4px rgba(181, 138, 61, 0.08); }
+.site-header nav { gap: clamp(18px, 3vw, 38px); font-size: 14px; letter-spacing: 0.03em; }
+.header-cta { box-shadow: 0 9px 20px rgba(181, 138, 61, 0.22); transition: transform .2s, box-shadow .2s, background .2s; }
+.header-cta:hover { transform: translateY(-2px); box-shadow: 0 13px 25px rgba(181, 138, 61, 0.28); }
+
+.hero { min-height: min(820px, calc(100vh - 78px)); }
+.hero::before { content: ""; position: absolute; inset: 22px; border: 1px solid rgba(255,255,255,.22); pointer-events: none; z-index: 1; }
+.hero-overlay { inset: auto 7% 12% auto; width: 36vw; height: 52vw; max-height: 620px; border-width: 1px; opacity: .3; }
+.hero-ornament { position: absolute; z-index: 1; right: 8%; bottom: 14%; width: 120px; height: 120px; border: 1px solid rgba(236,211,158,.7); border-radius: 50%; box-shadow: 0 0 0 12px rgba(236,211,158,.07), 0 0 0 30px rgba(236,211,158,.04); }
+.hero-content { padding-block: 110px 130px; }
+.hero-content h1 { max-width: 730px; font-size: clamp(58px, 6.7vw, 104px); text-wrap: balance; }
+.hero-copy { max-width: 540px; font-size: 18px; }
+.primary-button { border: 1px solid rgba(255,255,255,.16); box-shadow: 0 12px 25px rgba(0,0,0,.17); }
+.hero-proof { display: flex; gap: 22px; margin-top: 50px; color: rgba(255,255,255,.75); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+.hero-proof span { display: inline-flex; align-items: center; gap: 9px; }
+.hero-proof span::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: #ecd39e; }
+
+.intro { padding-top: 140px; }
+.intro > div { position: relative; padding-left: 28px; }
+.intro > div::before { content: ""; position: absolute; inset: 4px auto 4px 0; width: 2px; background: var(--gold); }
+.services { margin-top: 38px; border: 0; gap: 16px; }
+.services .service-card { min-height: 245px; padding: 38px 30px; border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(145deg, #fffdf9, #f8f1e6); transition: transform .25s ease, box-shadow .25s ease; }
+.services .service-card + .service-card { border-left: 1px solid var(--line); padding-left: 30px; }
+.services .service-card:hover { transform: translateY(-7px); box-shadow: 0 20px 35px rgba(76, 53, 20, .1); }
+.services h3 { font-size: 30px; }
+
+.dates-section { margin-top: 130px; background: linear-gradient(145deg, #ede2d3, #f5eee3); }
+.dates-section::after { content: ""; position: absolute; left: -180px; bottom: -330px; width: 600px; height: 600px; border: 1px solid rgba(181,138,61,.16); border-radius: 50%; }
+.calendar-shell { border: 1px solid rgba(181,138,61,.18); box-shadow: 0 34px 70px rgba(61,49,32,.16); }
+.calendar-main { padding: 42px 48px 46px; }
+.calendar-heading { margin-bottom: 34px; }
+.calendar-heading h3 { letter-spacing: -.03em; }
+.calendar-heading button { transition: transform .2s, background .2s, color .2s; }
+.calendar-heading button:hover:not(:disabled) { background: var(--gold); color: white; transform: translateY(-2px); }
+.calendar-grid { gap: 10px; }
+.calendar-grid button { transition: transform .2s, background .2s, border .2s, box-shadow .2s; }
+.calendar-grid button.selected { background: var(--gold); color: white; box-shadow: 0 8px 16px rgba(181,138,61,.28); }
+.date-summary { background: linear-gradient(180deg, #fffdf9, #f8f0e2); }
+.summary-icon { box-shadow: inset 0 0 0 6px rgba(181,138,61,.06); }
+.whatsapp-button { box-shadow: 0 12px 22px rgba(23,78,54,.18); transition: transform .2s, box-shadow .2s, background .2s; }
+.whatsapp-button:hover:not(.disabled) { transform: translateY(-2px); background: #123c2b; box-shadow: 0 16px 27px rgba(23,78,54,.25); }
+.closing { position: relative; overflow: hidden; padding-block: 132px; background: var(--ink); color: white; }
+.closing::before { content: "SR"; position: absolute; top: -125px; left: 50%; color: rgba(255,255,255,.035); font: 300px Georgia, serif; transform: translateX(-50%); }
+.closing > * { position: relative; }
+.closing .eyebrow { color: #ecd39e; }
+.closing .primary-button.dark { background: var(--gold); }
+footer { padding: 40px 5vw; background: #1b1917; color: rgba(255,255,255,.6); }
+.footer-brand { color: white; }
+
+.admin-dashboard { background: radial-gradient(circle at top right, #f6ede0, #f7f3ec 42%); }
+.admin-sidebar { background: linear-gradient(165deg, #29221d, #111211 75%); box-shadow: 16px 0 36px rgba(21,15,10,.12); }
+.admin-dashboard-content { padding: 52px 5vw; }
+.admin-dashboard-header { align-items: flex-end; }
+.admin-dashboard-header h1 { letter-spacing: -.04em; }
+.admin-statistics article { border: 0; box-shadow: 0 12px 30px rgba(61,49,32,.07); }
+.admin-calendar, .admin-reservations-panel { box-shadow: 0 22px 55px rgba(61,49,32,.1); }
+.admin-events-table-row:hover td { background: #fbf6ed; }
+.reservation-modal { border: 1px solid rgba(181,138,61,.2); }
+.reservation-modal-header { background: linear-gradient(135deg, #fffdf9, #f7efe2); }
+
+@media (max-width: 700px) {
+  .hero::before { inset: 12px; }
+  .hero-ornament { right: 20px; bottom: 95px; width: 72px; height: 72px; }
+  .hero-content { padding-top: 100px; }
+  .hero-proof { gap: 13px; flex-direction: column; margin-top: 36px; }
+  .intro { padding-top: 88px; }
+  .services { gap: 12px; }
+  .services .service-card, .services .service-card + .service-card { padding: 30px 24px; border-left: 1px solid var(--line); }
+  .calendar-main { padding: 28px 18px 32px; }
+  .calendar-grid { gap: 3px; }
+  .closing { padding-block: 90px; }
+}
