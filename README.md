@@ -1,37 +1,50 @@
-# Calendario full-stack
+# Salón Roma
 
-Aplicación de calendario construida con React, Next.js y TypeScript.
+Aplicación Next.js para consultar disponibilidad pública y administrar reservaciones de un salón de eventos.
 
-- **Frontend:** componentes React y App Router en `src/app`.
-- **Backend:** API REST en `src/app/api/events`.
-- **Persistencia local:** archivo `data/events.json`.
+## Flujo
 
-## Uso
+- **Visitante:** consulta fechas en `/`, selecciona una disponible y abre WhatsApp con un mensaje preparado. La API pública solo devuelve fechas y disponibilidad.
+- **Administrador:** inicia sesión en `/admin` para crear, editar y eliminar reservaciones desde `/admin/dashboard`. Los datos de clientes, pagos y notas permanecen privados detrás de `/api/events`.
+
+## Instalación y configuración
 
 Requiere Node.js 20 o superior.
 
 ```bash
-npm install
+npm ci
+```
+
+En Windows PowerShell, crea tu configuración local con:
+
+```powershell
+Copy-Item .env.example .env.local
+```
+
+Configura `ADMIN_USER`, `ADMIN_PASSWORD`, `ADMIN_SESSION_TOKEN` y `NEXT_PUBLIC_WHATSAPP_NUMBER`. El número de WhatsApp debe incluir código de país y contener únicamente dígitos.
+
+Ejecuta el proyecto:
+
+```bash
 npm run dev
 ```
 
-Abre [http://localhost:3000](http://localhost:3000).
+## Rutas
 
-## Comandos
+- `/` — landing y calendario público.
+- `/admin` — inicio de sesión administrativo.
+- `/admin/dashboard` — gestión de reservaciones.
+- `/api/availability` — disponibilidad pública, sin datos de clientes.
+- `/api/events` — API administrativa autenticada.
+
+## Validación
 
 ```bash
-npm run dev       # desarrollo
-npm run build     # compilación de producción
-npm run start     # ejecutar la compilación
-npm run lint      # análisis estático
-npm run typecheck # validar TypeScript
+npm run typecheck
+npm run lint
+npm run build
 ```
 
-## API
+## Almacenamiento
 
-- `GET /api/events` — lista eventos.
-- `POST /api/events` — crea un evento.
-- `PATCH /api/events/:id` — actualiza un evento.
-- `DELETE /api/events/:id` — elimina un evento.
-
-La persistencia en JSON es apropiada para uso local. Para desplegar múltiples instancias, sustituye `src/lib/events-store.ts` por una base de datos como PostgreSQL.
+`data/events.json` es adecuado solamente para desarrollo local y demostraciones. No es almacenamiento confiable para Vercel o entornos serverless. Antes de desplegar para un cliente real debe migrarse a PostgreSQL, Supabase u otra base de datos persistente.

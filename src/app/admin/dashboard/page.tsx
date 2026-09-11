@@ -6,6 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
+import { useRouter } from "next/navigation";
 
 import ReservationForm from "./ReservationForm";
 import AdminCalendar from "./AdminCalendar";
@@ -36,6 +37,7 @@ function formatMoney(amount: number) {
 }
 
 export default function AdminDashboardPage() {
+  const router = useRouter();
   const [section, setSection] =
     useState<Section>("calendar");
 
@@ -73,7 +75,7 @@ export default function AdminDashboardPage() {
       );
 
       if (response.status === 401) {
-        window.location.href = "/admin";
+        router.replace("/admin");
         return;
       }
 
@@ -96,10 +98,14 @@ export default function AdminDashboardPage() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [router]);
 
   useEffect(() => {
-    void loadEvents();
+    const timer = window.setTimeout(() => {
+      void loadEvents();
+    }, 0);
+
+    return () => window.clearTimeout(timer);
   }, [loadEvents]);
 
   const statistics = useMemo(() => {
@@ -175,7 +181,7 @@ export default function AdminDashboardPage() {
       method: "POST",
     });
 
-    window.location.href = "/admin";
+    router.replace("/admin");
   }
 
   return (

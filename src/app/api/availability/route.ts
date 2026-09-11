@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { listEvents } from "@/lib/events-store";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
@@ -13,7 +14,11 @@ export async function GET() {
       available: false,
     }));
 
-    return NextResponse.json(availability);
+    return NextResponse.json(availability, {
+      headers: {
+        "Cache-Control": "no-store",
+      },
+    });
   } catch {
     return NextResponse.json(
       {
